@@ -1,0 +1,19 @@
+<p>This is the Create-Sheet Component</p>
+<div class="container">
+    <dx-select-box placeholder="SelectBox" [items]="races" displayExpr="title" valueExpr="id"></dx-select-box>
+    <dx-tree-list id="playerClasses" [dataSource]="playerClasses" [showRowLines]="true" [columnAutoWidth]="true" keyExpr="id"
+        (onRowInserted)="rowInserted($event)">
+        <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+            <dxo-popup title="Klasseninfo" [showTitle]="true" [width]="700" [position]="{ my: 'top', at: 'top', of: window }">
+            </dxo-popup>
+        </dxo-editing>
+
+        <dxi-column dataField="class">
+            <dxo-lookup [dataSource]="classLookup" displayExpr="title" valueExpr="id"></dxo-lookup>
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="level" caption="Level" dataType="number">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+    </dx-tree-list>
+</div>

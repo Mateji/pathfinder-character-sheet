@@ -5,6 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LandingComponent } from './landing/landing.component';
 import { SheetComponent } from './sheet/sheet.component';
+import { CreateSheetComponent } from './create-sheet/create-sheet.component';
+import { AppRoutingModule } from './app.routing';
 
 
 const appRoutes: Routes = [
@@ -25,9 +27,11 @@ const appRoutes: Routes = [
     declarations: [
         AppComponent,
         SheetComponent,
-        LandingComponent
+        LandingComponent,
+        CreateSheetComponent
     ],
     imports: [
+        AppRoutingModule,
         RouterModule.forRoot(
             appRoutes,
             { enableTracing: true } // <-- debugging purposes only
