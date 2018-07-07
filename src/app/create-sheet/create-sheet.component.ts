@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Ability, Race } from '../dataClasses/sheet-classes';
+import { DxNumberBoxComponent } from 'devextreme-angular';
+import { ABILITY, RACE } from '../dataClasses/enums/enums';
 
 export class PlayerClass {
     id: string;
     class: Class;
     level: number;
-}
-
-export class Race {
-    id: number;
-    title: string;
 }
 
 export class Class {
@@ -21,42 +19,45 @@ export class Class {
     styleUrls: ['./create-sheet.component.css']
 })
 export class CreateSheetComponent implements OnInit {
-    races: Race[];
+    races: any[];
+    race: any;
     classes: Class[];
     playerClasses: any[];
     classLookup: any;
 
+    selectedRace: Race;
+
+    /**
+     * ViewChilds
+     */
+    // @ViewChild('strengthScore') strengthScoreDxComponent: DxNumberBoxComponent;
+    // @ViewChild('strengthModifier') strengthModifierDxComponent: DxNumberBoxComponent;
+    // @ViewChild('dexterityScore') dexterityScoreDxComponent: DxNumberBoxComponent;
+    // @ViewChild('dexterityModifier') dexterityModifierDxComponent: DxNumberBoxComponent;
+
+    /**
+     * Abilities
+     */
+    strength: Ability;
+    dexterity: Ability;
+    constitution: Ability;
+    intelligence: Ability;
+    wisdom: Ability;
+    charisma: Ability;
+
+
+
     constructor() {
-        this.races = [
-            {
-                id: 1,
-                title: 'Human',
-            },
-            {
-                id: 2,
-                title: 'Elf',
-            },
-            {
-                id: 3,
-                title: 'Half-Elf',
-            },
-            {
-                id: 4,
-                title: 'Half-Orc',
-            },
-            {
-                id: 5,
-                title: 'Dwarf',
-            },
-            {
-                id: 6,
-                title: 'Gnome',
-            },
-            {
-                id: 7,
-                title: 'Halfling',
-            }
-        ];
+        this.strength = new Ability(10, ABILITY.Strength);
+        this.dexterity = new Ability(10, ABILITY.Dexterity);
+        this.constitution = new Ability(10, ABILITY.Constitution);
+        this.intelligence = new Ability(10, ABILITY.Intelligence);
+        this.wisdom = new Ability(10, ABILITY.Wisdom);
+        this.charisma = new Ability(10, ABILITY.Charisma);
+
+        this.races = this.instantiateRaces();
+        this.race = this.races[0].race;
+
 
         this.classes = [
             {
@@ -119,6 +120,23 @@ export class CreateSheetComponent implements OnInit {
                 level: 3
             }
         ];
+    }
+
+    instantiateRaces() {
+        let races:any = [];
+        for (let race in RACE) {
+            let currentNumber = Number(race);
+            if (!isNaN(currentNumber)) {
+                let currentRace = new Race(currentNumber);
+                races.push({
+                    id: currentNumber,
+                    race: currentRace,
+                    title: currentRace.title
+                });
+            }
+        }
+
+        return races;
     }
 
     ngOnInit() {
