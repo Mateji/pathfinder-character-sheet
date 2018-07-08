@@ -139,6 +139,11 @@ export class CreateSheetComponent implements OnInit {
         return races;
     }
 
+    addPlusSign(event) {
+        if (event.value > 0) {
+            event.value = '+' + event.value;
+        }
+    }
     ngOnInit() {
     }
 
