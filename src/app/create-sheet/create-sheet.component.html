@@ -19,6 +19,13 @@
         </dxi-column>
     </dx-tree-list>
 
+    <dx-data-grid>
+        <dxi-column dataField="AbilityName"></dxi-column>
+        <dxi-column dataField="AbilityScore"></dxi-column>
+        <dxi-column dataField="RaceAdjustment"></dxi-column>
+        <dxi-column dataField="AbilityModifier"></dxi-column>
+    </dx-data-grid>
+
     <table>
         <thead>
             <tr>
@@ -31,39 +38,76 @@
         <tbody>
             <tr>
                 <td>Strength</td>
-                <td><dx-number-box [(value)]="strength.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Strength Ability Score"></dx-number-box></td>
-                <td><dx-text-box [(value)]="race.strengthModifier" [readOnly]="true" placeholder="Strength Race Adjustment"></dx-text-box></td>
-                <td><dx-text-box [(value)]="strength.abilityModifier" [readOnly]="true" placeholder="Strength Ability Modifier"></dx-text-box></td>
+                <td>
+                    <dx-number-box [(value)]="strength.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Strength Ability Score"></dx-number-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="race.strengthModifier" [readOnly]="true" placeholder="Strength Race Adjustment"></dx-text-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="strength.abilityModifier" [readOnly]="true" placeholder="Strength Ability Modifier"></dx-text-box>
+                </td>
             </tr>
             <tr>
                 <td>Dexterity</td>
-                <td><dx-number-box [(value)]="dexterity.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Dexterity Ability Score"></dx-number-box></td>
-                <td><dx-text-box [(value)]="race.dexterityModifier" [readOnly]="true" placeholder="Dexterity Race Adjustment"></dx-text-box></td>
-                <td><dx-text-box [(value)]="dexterity.abilityModifier" [readOnly]="true" placeholder="Dexterity Ability Modifier"></dx-text-box></td>
+                <td>
+                    <dx-number-box [(value)]="dexterity.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Dexterity Ability Score"></dx-number-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="race.dexterityModifier" [readOnly]="true" placeholder="Dexterity Race Adjustment"></dx-text-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="dexterity.abilityModifier" [readOnly]="true" placeholder="Dexterity Ability Modifier"></dx-text-box>
+                </td>
             </tr>
             <tr>
                 <td>Constitution</td>
-                <td><dx-number-box [(value)]="constitution.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Constitution Ability Score"></dx-number-box></td>
-                <td><dx-text-box [(value)]="race.constitutionModifier" (onValueChanged)="addPlusSign($event)" [readOnly]="true" placeholder="Constitution Race Adjustment"></dx-text-box></td>
-                <td><dx-text-box [(value)]="constitution.abilityModifier" [readOnly]="true" placeholder="Constitution Ability Modifier"></dx-text-box></td>
+                <td>
+                    <dx-number-box [(value)]="constitution.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Constitution Ability Score"></dx-number-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="race.constitutionModifier" (onValueChanged)="addPlusSign($event)" [readOnly]="true"
+                        placeholder="Constitution Race Adjustment"></dx-text-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="constitution.abilityModifier" [readOnly]="true" placeholder="Constitution Ability Modifier"></dx-text-box>
+                </td>
             </tr>
             <tr>
                 <td>Intelligence</td>
-                <td><dx-number-box [(value)]="intelligence.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Intelligence Ability Score"></dx-number-box></td>
-                <td><dx-text-box [(value)]="race.intelligenceModifier" [readOnly]="true" placeholder="Intelligence Race Adjustment"></dx-text-box></td>
-                <td><dx-text-box [(value)]="intelligence.abilityModifier" [readOnly]="true" placeholder="Intelligence Ability Modifier"></dx-text-box></td>
+                <td>
+                    <dx-number-box [(value)]="intelligence.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Intelligence Ability Score"></dx-number-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="race.intelligenceModifier" [readOnly]="true" placeholder="Intelligence Race Adjustment"></dx-text-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="intelligence.abilityModifier" [readOnly]="true" placeholder="Intelligence Ability Modifier"></dx-text-box>
+                </td>
             </tr>
             <tr>
                 <td>Wisdom</td>
-                <td><dx-number-box [(value)]="wisdom.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Wisdom Ability Score"></dx-number-box></td>
-                <td><dx-text-box [(value)]="race.wisdomModifier" [readOnly]="true" placeholder="Wisdom Race Adjustment"></dx-text-box></td>
-                <td><dx-text-box [(value)]="wisdom.abilityModifier" [readOnly]="true" placeholder="Wisdom Ability Modifier"></dx-text-box></td>
+                <td>
+                    <dx-number-box [(value)]="wisdom.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Wisdom Ability Score"></dx-number-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="race.wisdomModifier" [readOnly]="true" placeholder="Wisdom Race Adjustment"></dx-text-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="wisdom.abilityModifier" [readOnly]="true" placeholder="Wisdom Ability Modifier"></dx-text-box>
+                </td>
             </tr>
             <tr>
                 <td>Charisma</td>
-                <td><dx-number-box [(value)]="charisma.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Charisma Ability Score"></dx-number-box></td>
-                <td><dx-text-box [(value)]="race.charismaModifier" [readOnly]="true" placeholder="Charisma Race Adjustment"></dx-text-box></td>
-                <td><dx-text-box [(value)]="charisma.abilityModifier" [readOnly]="true" placeholder="Charisma Ability Modifier"></dx-text-box></td>
+                <td>
+                    <dx-number-box [(value)]="charisma.abilityScore" [min]="0" [max]="18" [showSpinButtons]="true" placeholder="Charisma Ability Score"></dx-number-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="race.charismaModifier" [readOnly]="true" placeholder="Charisma Race Adjustment"></dx-text-box>
+                </td>
+                <td>
+                    <dx-text-box [(value)]="charisma.abilityModifier" [readOnly]="true" placeholder="Charisma Ability Modifier"></dx-text-box>
+                </td>
             </tr>
         </tbody>
     </table>

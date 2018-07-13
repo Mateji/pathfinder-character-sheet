@@ -123,11 +123,12 @@ export class CreateSheetComponent implements OnInit {
     }
 
     instantiateRaces() {
-        let races:any = [];
-        for (let race in RACE) {
-            let currentNumber = Number(race);
+        const races: any = [];
+        // tslint:disable-next-line:forin
+        for (const race in RACE) {
+            const currentNumber = Number(race);
             if (!isNaN(currentNumber)) {
-                let currentRace = new Race(currentNumber);
+                const currentRace = new Race(currentNumber);
                 races.push({
                     id: currentNumber,
                     race: currentRace,
@@ -144,6 +145,7 @@ export class CreateSheetComponent implements OnInit {
             event.value = '+' + event.value;
         }
     }
+
     ngOnInit() {
     }
 
