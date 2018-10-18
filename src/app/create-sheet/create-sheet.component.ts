@@ -20,7 +20,7 @@ export class Class {
 })
 export class CreateSheetComponent implements OnInit {
     races: any[];
-    race: any;
+    race: Race;
     classes: Class[];
     playerClasses: any[];
     classLookup: any;
@@ -48,12 +48,7 @@ export class CreateSheetComponent implements OnInit {
 
 
     constructor() {
-        this.strength = new Ability(10, ABILITY.Strength);
-        this.dexterity = new Ability(10, ABILITY.Dexterity);
-        this.constitution = new Ability(10, ABILITY.Constitution);
-        this.intelligence = new Ability(10, ABILITY.Intelligence);
-        this.wisdom = new Ability(10, ABILITY.Wisdom);
-        this.charisma = new Ability(10, ABILITY.Charisma);
+
 
         this.races = this.instantiateRaces();
         this.race = this.races[0].race;

@@ -36,13 +36,13 @@ export class Race {
                 this.constitutionModifier += 2;
                 this.wisdomModifier += 2;
                 this.charismaModifier -= 2;
-                
+
                 this.size = SIZE.Medium;
                 this.speed = 20;
                 this.weaponFamiliarity = [WEAPON.Battleaxe, WEAPON.HeavyPick, WEAPON.Warhammer, WEAPON.Dwarven];
                 this.languages = [LANGUAGE.Common, LANGUAGE.Dwarven];
 
-                this.miscTraits = ['Darkvision-60', 'Defensive Training', 'Greed','Hatred','Hardy','Stability','Stonecunning']
+                this.miscTraits = ['Darkvision-60', 'Defensive Training', 'Greed', 'Hatred', 'Hardy', 'Stability', 'Stonecunning'];
                 break;
             case RACE.Elf:
                 this.id = RACE.Elf;
@@ -55,10 +55,23 @@ export class Race {
 
                 this.size = SIZE.Medium;
                 this.speed = 30;
-                this.weaponFamiliarity = [WEAPON.Longbow, WEAPON.CompositeLongbow, WEAPON.Longsword, WEAPON.Rapier, WEAPON.Shortbow, WEAPON.CompositeShortbow, WEAPON.Elven];
+                this.weaponFamiliarity = [
+                    WEAPON.Longbow,
+                    WEAPON.CompositeLongbow,
+                    WEAPON.Longsword,
+                    WEAPON.Rapier,
+                    WEAPON.Shortbow,
+                    WEAPON.CompositeShortbow,
+                    WEAPON.Elven
+                ];
                 this.languages = [LANGUAGE.Common, LANGUAGE.Elven];
 
-                this.miscTraits = ['Low-Light Vision', 'Elven Immunities', 'Elven Magic', 'Keen Senses'];
+                this.miscTraits = [
+                    'Low-Light Vision',
+                    'Elven Immunities',
+                    'Elven Magic',
+                    'Keen Senses'
+                ];
                 break;
             case RACE.Gnome:
                 this.id = RACE.Gnome;
@@ -72,9 +85,20 @@ export class Race {
                 this.size = SIZE.Small;
                 this.speed = 20;
                 this.weaponFamiliarity = [WEAPON.Gnome];
-                this.languages = [LANGUAGE.Common, LANGUAGE.Gnome, LANGUAGE.Sylvan];
+                this.languages = [
+                    LANGUAGE.Common,
+                    LANGUAGE.Gnome,
+                    LANGUAGE.Sylvan
+                ];
 
-                this.miscTraits = ['Defensive Training', 'Gnome Magic', 'Hatred', 'Illusion Resistance', 'Keen Senses', 'Obsessive'];
+                this.miscTraits = [
+                    'Defensive Training',
+                    'Gnome Magic',
+                    'Hatred',
+                    'Illusion Resistance',
+                    'Keen Senses',
+                    'Obsessive'
+                ];
                 break;
             case RACE.HalfElf:
                 this.id = RACE.HalfElf;
@@ -82,7 +106,7 @@ export class Race {
 
                 // Ability Modifiers
                 this.bonusModifier += 2;
-                
+
                 this.size = SIZE.Medium;
                 this.speed = 30;
                 this.weaponFamiliarity = [];
@@ -96,7 +120,7 @@ export class Race {
 
                 // Ability Modifiers
                 this.bonusModifier += 2;
-                
+
                 this.size = SIZE.Medium;
                 this.speed = 30;
                 this.weaponFamiliarity = [WEAPON.Greataxe, WEAPON.Falchion, WEAPON.Orc];
@@ -112,7 +136,7 @@ export class Race {
                 this.dexterityModifier += 2;
                 this.charismaModifier += 2;
                 this.strengthModifier -= 2;
-                
+
                 this.size = SIZE.Small;
                 this.speed = 20;
                 this.weaponFamiliarity = [WEAPON.Sling, WEAPON.Halfling];
@@ -126,7 +150,7 @@ export class Race {
 
                 // Ability Modifiers
                 this.bonusModifier += 2;
-                
+
                 this.size = SIZE.Medium;
                 this.speed = 30;
                 this.weaponFamiliarity = [];
@@ -167,8 +191,8 @@ export class CharacterSheet {
     AbilityCharisma: Ability;
 
     // Skills
-    SkillAcrobaticTotal
-    AcrobaticSkillRank
+    SkillAcrobaticTotal;
+    AcrobaticSkillRank;
 }
 
 export class SkillAcrobatics {
@@ -184,14 +208,34 @@ export class Ability {
     tempAdjustment: number;
     tempModifier: number;
     _abilityModifier: number;
+    scoreTable: Map<number, number>;
 
     constructor(abilityScore: number, abilityType: ABILITY) {
         this.abilityScore = abilityScore;
         this.abilityType = abilityType;
+
+        // Init Score Table
+        this.scoreTable = new Map();
+        this.scoreTable.set(7, -4);
+        this.scoreTable.set(8, -2);
+        this.scoreTable.set(9, -1);
+        this.scoreTable.set(10, 0);
+        this.scoreTable.set(11, 1);
+        this.scoreTable.set(12, 2);
+        this.scoreTable.set(13, 3);
+        this.scoreTable.set(14, 5);
+        this.scoreTable.set(15, 7);
+        this.scoreTable.set(16, 10);
+        this.scoreTable.set(17, 13);
+        this.scoreTable.set(18, 17);
     }
 
     get abilityModifier() {
         return this._abilityModifier;
+    }
+
+    get incrementCost() {
+        return this.scoreTable.get(this.abilityScore);
     }
 
     set abilityModifier(abilityModifier: number) {

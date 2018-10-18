@@ -7,6 +7,7 @@ import { LandingComponent } from './landing/landing.component';
 import { SheetComponent } from './sheet/sheet.component';
 import { CreateSheetComponent } from './create-sheet/create-sheet.component';
 import { AppRoutingModule } from './app.routing';
+import { AbilityGridComponent } from './ability-grid/ability-grid.component';
 
 
 const appRoutes: Routes = [
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
         AppComponent,
         SheetComponent,
         LandingComponent,
-        CreateSheetComponent
+        CreateSheetComponent,
+        AbilityGridComponent
     ],
     imports: [
         AppRoutingModule,
