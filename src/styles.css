@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+.align-right input[type=text], input[type=password] {
+    text-align: right;
+}
+.pull-right {
+    text-align: right;
+}

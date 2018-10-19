@@ -24,6 +24,18 @@ export class AbilityGridComponent implements OnInit {
     currentBuyingPoints: number;
     scoreTable: Map<number, number>;
 
+    bonusAbilitiesList: string[];
+    selectedBonusAbility: string;
+
+    /**
+     * DevExtreme Control Settings
+     */
+    dxAbilityScoreWidth = 96;
+    dxAbilityCostWidth = 40;
+    dxRaceAdjustmentWidth = 40;
+    dxAbilityModifierWidth = 40;
+
+
     constructor() {
         this.strength = new Ability(10, ABILITY.Strength);
         this.dexterity = new Ability(10, ABILITY.Dexterity);
@@ -45,66 +57,47 @@ export class AbilityGridComponent implements OnInit {
         this.scoreTable.set(16, 10);
         this.scoreTable.set(17, 13);
         this.scoreTable.set(18, 17);
+
+        this.bonusAbilitiesList = [
+            'Strength',
+            'Dexterity',
+            'Constitution',
+            'Intelligence',
+            'Wisdom',
+            'Charisma'
+        ];
+
+        this.selectedBonusAbility = '';
     }
 
-    ngOnInit() {
-        this.currentBuyingPoints = this.buyingPoints;
-        // this.abilities = [
-        //     {
-        //         AbilityName: 'Strength',
-        //         AbilityScore: this.strength.abilityScore,
-        //         RaceAdjustment: this.selectedRace.strengthModifier,
-        //         AbilityModifier: this.strength.abilityModifier
-        //     },
-        //     {
-        //         AbilityName: 'Dexterity',
-        //         AbilityScore: this.dexterity.abilityScore,
-        //         RaceAdjustment: this.selectedRace.dexterityModifier,
-        //         AbilityModifier: this.dexterity.abilityModifier
-        //     },
-        //     {
-        //         AbilityName: 'Constitution',
-        //         AbilityScore: this.constitution.abilityScore,
-        //         RaceAdjustment: this.selectedRace.constitutionModifier,
-        //         AbilityModifier: this.constitution.abilityModifier
-        //     },
-        //     {
-        //         AbilityName: 'Intelligence',
-        //         AbilityScore: this.intelligence.abilityScore,
-        //         RaceAdjustment: this.selectedRace.intelligenceModifier,
-        //         AbilityModifier: this.intelligence.abilityModifier
-        //     },
-        //     {
-        //         AbilityName: 'Wisdom',
-        //         AbilityScore: this.wisdom.abilityScore,
-        //         RaceAdjustment: this.selectedRace.wisdomModifier,
-        //         AbilityModifier: this.wisdom.abilityModifier
-        //     },
-        //     {
-        //         AbilityName: 'Charisma',
-        //         AbilityScore: this.charisma.abilityScore,
-        //         RaceAdjustment: this.selectedRace.charismaModifier,
-        //         AbilityModifier: this.charisma.abilityModifier
-        //     }
-        // ];
+    ngOnInit() { }
+
+    calculatePoints(): number {
+        let buyingPoints = this.buyingPoints;
+        buyingPoints -= this.strength.abilityCost;
+        buyingPoints -= this.dexterity.abilityCost;
+        buyingPoints -= this.constitution.abilityCost;
+        buyingPoints -= this.intelligence.abilityCost;
+        buyingPoints -= this.wisdom.abilityCost;
+        buyingPoints -= this.charisma.abilityCost;
+
+        return buyingPoints;
     }
 
-    checkAbilityCost(event, abilityName) {
-        const valueCost = this.scoreTable.get(event.value);
+    finalModifier(abilityScore: string, raceModifier: string) {
+        let finalModifier: number;
 
-        // if (this[abilityName].abilityScore === event.value) {
-        //     return;
-        // }
+        finalModifier = Math.floor(((parseInt(abilityScore, 10) + parseInt(raceModifier, 10)) - 10) / 2);
 
-        if (valueCost > this.currentBuyingPoints) {
-            // this.showError(event.element);
-            this[abilityName].abilityScore = event.previousValue;
-            return;
-        } else {
-            this.currentBuyingPoints -= valueCost;
-        }
+        return finalModifier;
     }
 
+    showRaceAbilityBonus(): boolean {
+        return this.selectedRace.bonusModifier > 0;
+    }
 
-
+    // TODO: Rename function and fix function
+    changeDropDownBoxValue(e) {
+        this.selectedBonusAbility = e.Component.getSelectedNodesKeys();
+    }
 }

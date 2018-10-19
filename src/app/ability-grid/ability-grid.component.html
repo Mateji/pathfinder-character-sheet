@@ -1,124 +1,200 @@
+<dx-drop-down-box *ngIf="showRaceAbilityBonus()" [(value)]="selectedBonusAbility" [dataSource]="bonusAbilitiesList">
+    <div *dxTemplate="let contentData of 'content'">
+        <dx-list [dataSource]="bonusAbilitiesList" selectionMode="single" (onSelectionChanged)="changeDropDownBoxValue($event)">
+        </dx-list>
+    </div>
+</dx-drop-down-box>
 <table>
     <thead>
         <tr>
             <th>Ability Name</th>
             <th>Ability Score</th>
             <th>Cost</th>
-            <th>Race Adjustment</th>
             <th>Ability Modifier</th>
+            <th *ngIf="showRaceAbilityBonus()">Race Ability Bonus</th>
+            <th>Race Adjustment</th>
+            <th>Final Score</th>
+            <th>Final Modifier</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Strength</td>
             <td>
-                <dx-number-box [(value)]="strength.abilityScore" [min]="7" [max]="18" [showSpinButtons]="true" (onValueChanged)="checkAbilityCost($event, 'strength')"
+                <dx-number-box [(value)]="strength.abilityScore" [min]="7" [max]="18" [showSpinButtons]="true" [width]="dxAbilityScoreWidth"
                     placeholder="Strength Ability Score"></dx-number-box>
             </td>
             <td>
-                <dx-text-box [(value)]="strength.incrementCost" [readOnly]="true"></dx-text-box>
+                <dx-text-box [value]="strength.abilityCost" [readOnly]="true" [width]="dxAbilityCostWidth" class="align-right"
+                    class="align-right"></dx-text-box>
             </td>
             <td>
-                <dx-text-box [(value)]="(selectedRace.strengthModifier) > 0 ? '+' + selectedRace.strengthModifier : selectedRace.strengthModifier"
-                    [readOnly]="true" placeholder="Strength Race Adjustment"></dx-text-box>
+                <dx-text-box [value]="strength.abilityModifier | addPrefix" [readOnly]="true" [width]="dxAbilityModifierWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td *ngIf="showRaceAbilityBonus()">
+                <input type="radio" name="raceAbilityBonus">
             </td>
             <td>
-                <dx-text-box [(value)]="(strength.abilityModifier) > 0 ? '+' + strength.abilityModifier : strength.abilityModifier"
-                    [readOnly]="true" placeholder="Strength Ability Modifier"></dx-text-box>
+                <dx-text-box [value]="selectedRace.strengthModifier | addPrefix" [readOnly]="true" [width]="dxRaceAdjustmentWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="strength.abilityScore + selectedRace.strengthModifier" [readOnly]="true" [width]="dxAbilityScoreWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="finalModifier(strength.abilityScore, selectedRace.strengthModifier) | addPrefix"
+                    [readOnly]="true" [width]="dxAbilityModifierWidth" class="align-right"></dx-text-box>
             </td>
         </tr>
         <tr>
             <td>Dexterity</td>
             <td>
-                <dx-number-box [(value)]="dexterity.abilityScore" [min]="7" [max]="18" [showSpinButtons]="true"
-                    placeholder="Dexterity Ability Score"></dx-number-box>
+                <dx-number-box [(value)]="dexterity.abilityScore" [min]="7" [max]="18" [showSpinButtons]="true" [width]="dxAbilityScoreWidth"></dx-number-box>
             </td>
             <td>
-                <dx-text-box [(value)]="dexterity.incrementCost" [readOnly]="true"></dx-text-box>
+                <dx-text-box [value]="dexterity.abilityCost" [readOnly]="true" [width]="dxAbilityCostWidth" class="align-right"></dx-text-box>
             </td>
             <td>
-                <dx-text-box [(value)]="(selectedRace.dexterityModifier) > 0 ? '+' + selectedRace.dexterityModifier : selectedRace.dexterityModifier"
-                    [readOnly]="true" placeholder="Dexterity Race Adjustment"></dx-text-box>
+                <dx-text-box [value]="dexterity.abilityModifier | addPrefix" [readOnly]="true" [width]="dxAbilityModifierWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td *ngIf="showRaceAbilityBonus()">
+                <input type="radio" name="raceAbilityBonus">
             </td>
             <td>
-                <dx-text-box [(value)]="(dexterity.abilityModifier) > 0 ? '+' + dexterity.abilityModifier : dexterity.abilityModifier"
-                    [readOnly]="true" placeholder="Dexterity Ability Modifier"></dx-text-box>
+                <dx-text-box [value]="selectedRace.dexterityModifier | addPrefix" [readOnly]="true" [width]="dxRaceAdjustmentWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="dexterity.abilityScore + selectedRace.dexterityModifier" [readOnly]="true"
+                    [width]="dxAbilityScoreWidth" class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="finalModifier(dexterity.abilityScore, selectedRace.dexterityModifier) | addPrefix"
+                    [readOnly]="true" [width]="dxAbilityModifierWidth" class="align-right"></dx-text-box>
             </td>
         </tr>
         <tr>
             <td>Constitution</td>
             <td>
                 <dx-number-box [(value)]="constitution.abilityScore" [min]="7" [max]="18" [showSpinButtons]="true"
-                    placeholder="Constitution Ability Score"></dx-number-box>
+                    [width]="dxAbilityScoreWidth"></dx-number-box>
             </td>
             <td>
-                <dx-text-box [(value)]="constitution.incrementCost" [readOnly]="true"></dx-text-box>
+                <dx-text-box [value]="constitution.abilityCost" [readOnly]="true" [width]="dxAbilityCostWidth" class="align-right"></dx-text-box>
             </td>
             <td>
-                <dx-text-box [(value)]="(selectedRace.constitutionModifier) > 0 ? '+' + selectedRace.constitutionModifier : selectedRace.constitutionModifier"
-                    [readOnly]="true" placeholder="Constitution Race Adjustment"></dx-text-box>
+                <dx-text-box [value]="constitution.abilityModifier | addPrefix" [readOnly]="true" [width]="dxAbilityModifierWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td *ngIf="showRaceAbilityBonus()">
+                <input type="radio" name="raceAbilityBonus">
             </td>
             <td>
-                <dx-text-box [(value)]="(constitution.abilityModifier) > 0 ? '+' + constitution.abilityModifier : constitution.abilityModifier"
-                    [readOnly]="true" placeholder="Constitution Ability Modifier"></dx-text-box>
+                <dx-text-box [value]="selectedRace.constitutionModifier | addPrefix" [readOnly]="true" [width]="dxRaceAdjustmentWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="constitution.abilityScore + selectedRace.constitutionModifier" [readOnly]="true"
+                    [width]="dxAbilityScoreWidth" class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="finalModifier(constitution.abilityScore, selectedRace.constitutionModifier) | addPrefix"
+                    [readOnly]="true" [width]="dxAbilityModifierWidth" class="align-right"></dx-text-box>
             </td>
         </tr>
         <tr>
             <td>Intelligence</td>
             <td>
                 <dx-number-box [(value)]="intelligence.abilityScore" [min]="7" [max]="18" [showSpinButtons]="true"
-                    placeholder="Intelligence Ability Score"></dx-number-box>
+                    [width]="dxAbilityScoreWidth"></dx-number-box>
             </td>
             <td>
-                <dx-text-box [(value)]="intelligence.incrementCost" [readOnly]="true"></dx-text-box>
+                <dx-text-box [value]="intelligence.abilityCost" [readOnly]="true" [width]="dxAbilityCostWidth" class="align-right"></dx-text-box>
             </td>
             <td>
-                <dx-text-box [(value)]="(selectedRace.intelligenceModifier) > 0 ? '+' + selectedRace.intelligenceModifier : selectedRace.intelligenceModifier"
-                    [readOnly]="true" placeholder="Intelligence Race Adjustment"></dx-text-box>
+                <dx-text-box [value]="intelligence.abilityModifier | addPrefix" [readOnly]="true" [width]="dxAbilityModifierWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td *ngIf="showRaceAbilityBonus()">
+                <input type="radio" name="raceAbilityBonus">
             </td>
             <td>
-                <dx-text-box [(value)]="(intelligence.abilityModifier) > 0 ? '+' + intelligence.abilityModifier : intelligence.abilityModifier"
-                    [readOnly]="true" placeholder="Intelligence Ability Modifier"></dx-text-box>
+                <dx-text-box [value]="selectedRace.intelligenceModifier | addPrefix" [readOnly]="true" [width]="dxRaceAdjustmentWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="intelligence.abilityScore + selectedRace.intelligenceModifier" [readOnly]="true"
+                    [width]="dxAbilityScoreWidth" class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="finalModifier(intelligence.abilityScore, selectedRace.intelligenceModifier) | addPrefix"
+                    [readOnly]="true" [width]="dxAbilityModifierWidth" class="align-right"></dx-text-box>
             </td>
         </tr>
         <tr>
             <td>Wisdom</td>
             <td>
-                <dx-number-box [(value)]="wisdom.abilityScore" [min]="7" [max]="18" [showSpinButtons]="true"
-                    placeholder="Wisdom Ability Score"></dx-number-box>
+                <dx-number-box [(value)]="wisdom.abilityScore" [min]="7" [max]="18" [showSpinButtons]="true" [width]="dxAbilityScoreWidth"></dx-number-box>
             </td>
             <td>
-                <dx-text-box [(value)]="wisdom.incrementCost" [readOnly]="true"></dx-text-box>
+                <dx-text-box [value]="wisdom.abilityCost" [readOnly]="true" [width]="dxAbilityCostWidth" class="align-right"></dx-text-box>
             </td>
             <td>
-                <dx-text-box [(value)]="(selectedRace.wisdomModifier) > 0 ? '+' + selectedRace.wisdomModifier : selectedRace.wisdomModifier"
-                    [readOnly]="true" placeholder="Wisdom Race Adjustment"></dx-text-box>
+                <dx-text-box [value]="wisdom.abilityModifier | addPrefix" [readOnly]="true" [width]="dxAbilityModifierWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td *ngIf="showRaceAbilityBonus()">
+                <input type="radio" name="raceAbilityBonus">
             </td>
             <td>
-                <dx-text-box [(value)]="(wisdom.abilityModifier) > 0 ? '+' + wisdom.abilityModifier : wisdom.abilityModifier"
-                    [readOnly]="true" placeholder="Wisdom Ability Modifier"></dx-text-box>
+                <dx-text-box [value]="selectedRace.wisdomModifier | addPrefix" [readOnly]="true" [width]="dxRaceAdjustmentWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="wisdom.abilityScore + selectedRace.wisdomModifier" [readOnly]="true" [width]="dxAbilityScoreWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="finalModifier(wisdom.abilityScore, selectedRace.wisdomModifier) | addPrefix"
+                    [readOnly]="true" [width]="dxAbilityModifierWidth" class="align-right"></dx-text-box>
             </td>
         </tr>
         <tr>
             <td>Charisma</td>
             <td>
-                <dx-number-box [(value)]="charisma.abilityScore" [min]="7" [max]="18" [showSpinButtons]="true"
-                    placeholder="Charisma Ability Score"></dx-number-box>
+                <dx-number-box [(value)]="charisma.abilityScore" [min]="7" [max]="18" [showSpinButtons]="true" [width]="dxAbilityScoreWidth"></dx-number-box>
             </td>
             <td>
-                <dx-text-box [(value)]="charisma.incrementCost" [readOnly]="true"></dx-text-box>
+                <dx-text-box [value]="charisma.abilityCost" [readOnly]="true" [width]="dxAbilityCostWidth" class="align-right"></dx-text-box>
             </td>
             <td>
-                <dx-text-box [(value)]="(selectedRace.charismaModifier) > 0 ? '+' + selectedRace.charismaModifier : selectedRace.charismaModifier"
-                    [readOnly]="true" placeholder="Charisma Race Adjustment"></dx-text-box>
+                <dx-text-box [value]="charisma.abilityModifier | addPrefix" [readOnly]="true" [width]="dxAbilityModifierWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td *ngIf="showRaceAbilityBonus()">
+                <input type="radio" name="raceAbilityBonus">
             </td>
             <td>
-                <dx-text-box [(value)]="(charisma.abilityModifier) > 0 ? '+' + charisma.abilityModifier : charisma.abilityModifier"
-                    [readOnly]="true" placeholder="Charisma Ability Modifier"></dx-text-box>
+                <dx-text-box [value]="selectedRace.charismaModifier | addPrefix" [readOnly]="true" [width]="dxRaceAdjustmentWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="charisma.abilityScore + selectedRace.charismaModifier" [readOnly]="true" [width]="dxAbilityScoreWidth"
+                    class="align-right"></dx-text-box>
+            </td>
+            <td>
+                <dx-text-box [value]="finalModifier(charisma.abilityScore, selectedRace.charismaModifier) | addPrefix"
+                    [readOnly]="true" [width]="dxAbilityModifierWidth" class="align-right"></dx-text-box>
             </td>
         </tr>
         <tr>
-            <td>Points: {{ currentBuyingPoints }}</td>
+            <td colspan="2">Remaining Points: </td>
+            <td>
+                <dx-text-box [value]="calculatePoints()" [readOnly]="true" [width]="dxAbilityCostWidth" class="align-right"></dx-text-box>
+            </td>
         </tr>
     </tbody>
 </table>

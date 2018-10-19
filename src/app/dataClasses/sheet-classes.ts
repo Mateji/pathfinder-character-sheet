@@ -205,9 +205,9 @@ export class SkillAcrobatics {
 export class Ability {
     abilityType: ABILITY;
     _abilityScore: number;
+    _abilityModifier: number;
     tempAdjustment: number;
     tempModifier: number;
-    _abilityModifier: number;
     scoreTable: Map<number, number>;
 
     constructor(abilityScore: number, abilityType: ABILITY) {
@@ -234,7 +234,7 @@ export class Ability {
         return this._abilityModifier;
     }
 
-    get incrementCost() {
+    get abilityCost() {
         return this.scoreTable.get(this.abilityScore);
     }
 

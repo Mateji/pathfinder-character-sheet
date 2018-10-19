@@ -8,6 +8,7 @@ import { SheetComponent } from './sheet/sheet.component';
 import { CreateSheetComponent } from './create-sheet/create-sheet.component';
 import { AppRoutingModule } from './app.routing';
 import { AbilityGridComponent } from './ability-grid/ability-grid.component';
+import { AddPrefixPipe } from './pipes/add-prefix/add-prefix.pipe';
 
 
 const appRoutes: Routes = [
@@ -30,7 +31,8 @@ const appRoutes: Routes = [
         SheetComponent,
         LandingComponent,
         CreateSheetComponent,
-        AbilityGridComponent
+        AbilityGridComponent,
+        AddPrefixPipe
     ],
     imports: [
         AppRoutingModule,
