@@ -1,9 +1,12 @@
-<dx-drop-down-box *ngIf="showRaceAbilityBonus()" [(value)]="selectedBonusAbility" [dataSource]="bonusAbilitiesList">
-    <div *dxTemplate="let contentData of 'content'">
-        <dx-list [dataSource]="bonusAbilitiesList" selectionMode="single" (onSelectionChanged)="changeDropDownBoxValue($event)">
-        </dx-list>
-    </div>
-</dx-drop-down-box>
+<div *ngIf="showRaceAbilityBonus()">
+    <label>Favoured Ability</label>
+    <dx-drop-down-box [(value)]="selectedBonusAbility" [dataSource]="bonusAbilitiesList">
+        <div *dxTemplate="let contentData of 'content'">
+            <dx-list [dataSource]="bonusAbilitiesList" selectionMode="single" (onSelectionChanged)="changeDropDownBoxValue($event)">
+            </dx-list>
+        </div>
+    </dx-drop-down-box>
+</div>
 <table>
     <thead>
         <tr>
@@ -193,7 +196,11 @@
         <tr>
             <td colspan="2">Remaining Points: </td>
             <td>
-                <dx-text-box [value]="calculatePoints()" [readOnly]="true" [width]="dxAbilityCostWidth" class="align-right"></dx-text-box>
+                <dx-text-box [value]="calculatePoints()" [readOnly]="true" [width]="dxAbilityCostWidth" class="align-right">
+                    <dx-validator>
+                        <dxi-validation-rule type="compare" [comparisonTarget]="abilityPointCheck" [comparisonType]=">=" message="Too many points used."></dxi-validation-rule>
+                    </dx-validator>
+                </dx-text-box>
             </td>
         </tr>
     </tbody>

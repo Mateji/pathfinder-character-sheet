@@ -100,4 +100,8 @@ export class AbilityGridComponent implements OnInit {
     changeDropDownBoxValue(e) {
         this.selectedBonusAbility = e.Component.getSelectedNodesKeys();
     }
+
+    abilityPointCheck() {
+        return 0;
+    }
 }

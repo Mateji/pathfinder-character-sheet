@@ -5,7 +5,7 @@
 
     <dx-tree-list id="playerClasses" [dataSource]="playerClasses" [showRowLines]="true" [columnAutoWidth]="true" keyExpr="id"
         (onRowInserted)="rowInserted($event)">
-        <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+        <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true" [useIcons]="true">
             <dxo-popup title="Klasseninfo" [showTitle]="true" [width]="700" [position]="{ my: 'top', at: 'top', of: window }">
             </dxo-popup>
         </dxo-editing>
