@@ -98,7 +98,7 @@ export class AbilityGridComponent implements OnInit {
 
     // TODO: Rename function and fix function
     changeDropDownBoxValue(e) {
-        this.selectedBonusAbility = e.Component.getSelectedNodesKeys();
+        this.selectedBonusAbility = e.addedItems[0];
     }
 
     abilityPointCheck() {

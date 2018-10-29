@@ -196,9 +196,9 @@
         <tr>
             <td colspan="2">Remaining Points: </td>
             <td>
-                <dx-text-box [value]="calculatePoints()" [readOnly]="true" [width]="dxAbilityCostWidth" class="align-right">
+                <dx-text-box [value]="calculatePoints()" [readOnly]="true" [width]="dxAbilityCostWidth" class="align-right" id="remainingPoints">
                     <dx-validator>
-                        <dxi-validation-rule type="compare" [comparisonTarget]="abilityPointCheck" [comparisonType]=">=" message="Too many points used."></dxi-validation-rule>
+                        <dxi-validation-rule type="compare" [comparisonTarget]="abilityPointCheck" comparisonType=">=" message="Too many points used."></dxi-validation-rule>
                     </dx-validator>
                 </dx-text-box>
             </td>
