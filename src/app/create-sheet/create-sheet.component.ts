@@ -1,3 +1,4 @@
+import { AbilityGridComponent } from './../ability-grid/ability-grid.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Ability, Race } from '../dataClasses/sheet-classes';
 import { DxNumberBoxComponent } from 'devextreme-angular';
@@ -24,6 +25,9 @@ export class CreateSheetComponent implements OnInit {
     classes: Class[];
     playerClasses: any[];
     classLookup: any;
+
+    @ViewChild('abilityGrid')
+    private abilityGrid: AbilityGridComponent;
 
     selectedRace: Race;
 
@@ -146,5 +150,9 @@ export class CreateSheetComponent implements OnInit {
 
     rowInserted(object) {
         console.log(object);
+    }
+
+    validatePage() {
+        this.abilityGrid.validate();
     }
 }

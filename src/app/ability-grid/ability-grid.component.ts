@@ -1,6 +1,8 @@
 import { ABILITY } from './../dataClasses/enums/enums';
 import { Race, Ability } from './../dataClasses/sheet-classes';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { DxTextBoxComponent } from 'devextreme-angular/ui/text-box';
+import { DxValidatorComponent } from 'devextreme-angular';
 
 @Component({
     selector: 'app-ability-grid',
@@ -11,6 +13,11 @@ export class AbilityGridComponent implements OnInit {
 
     @Input() buyingPoints: number;
     @Input() selectedRace: Race;
+
+    validState: boolean;
+
+    @ViewChild('remainingPointsValidator')
+    private remainingPointsValidator: DxValidatorComponent;
 
     strength: Ability;
     dexterity: Ability;
@@ -37,6 +44,9 @@ export class AbilityGridComponent implements OnInit {
 
 
     constructor() {
+
+        this.validState = true;
+
         this.strength = new Ability(10, ABILITY.Strength);
         this.dexterity = new Ability(10, ABILITY.Dexterity);
         this.constitution = new Ability(10, ABILITY.Constitution);
@@ -103,5 +113,16 @@ export class AbilityGridComponent implements OnInit {
 
     abilityPointCheck() {
         return 0;
+    }
+
+    public validate(): boolean {
+        let isValid = false;
+
+        const validationResult = this.remainingPointsValidator.instance.validate();
+
+        isValid = validationResult.isValid;
+        console.log(isValid);
+
+        return isValid;
     }
 }

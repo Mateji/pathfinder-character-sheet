@@ -1,10 +1,12 @@
 <p>This is the Create-Sheet Component</p>
 <div class="container">
 
+    <dx-button text="Validate Page" (onClick)="validatePage()"></dx-button>
+
     <dx-select-box placeholder="SelectBox" [items]="races" [(value)]="race" displayExpr="title" valueExpr="race"></dx-select-box>
 
-    <dx-tree-list id="playerClasses" [dataSource]="playerClasses" [showRowLines]="true" [columnAutoWidth]="true" keyExpr="id"
-        (onRowInserted)="rowInserted($event)">
+    <dx-tree-list id="playerClasses" [dataSource]="playerClasses" [showRowLines]="true" [columnAutoWidth]="true"
+        keyExpr="id" (onRowInserted)="rowInserted($event)">
         <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true" [useIcons]="true">
             <dxo-popup title="Klasseninfo" [showTitle]="true" [width]="700" [position]="{ my: 'top', at: 'top', of: window }">
             </dxo-popup>
@@ -19,6 +21,6 @@
         </dxi-column>
     </dx-tree-list>
 
-    <app-ability-grid [buyingPoints]="20" [selectedRace]="race"></app-ability-grid>
+    <app-ability-grid #abilityGrid [buyingPoints]="20" [selectedRace]="race"></app-ability-grid>
 
 </div>
